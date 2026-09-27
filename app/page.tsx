@@ -1,69 +1,160 @@
-import Image from "next/image";
+"use client";
+
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { getLocations } from "@/app/services/room";
+
+type TLocation = {
+  id: number;
+  tenViTri: string;
+  tinhThanh: string;
+  quocGia: string;
+};
 
 export default function Home() {
+  const router = useRouter();
+
+  const [locations, setLocations] = useState<TLocation[]>([]);
+  const [location, setLocation] = useState("");
+
+  useEffect(() => {
+    const fetchLocations = async () => {
+      try {
+        const data = await getLocations();
+        setLocations(data);
+      } catch (error) {
+        console.error("Không thể lấy danh sách vị trí:", error);
+      }
+    };
+
+    fetchLocations();
+  }, []);
+
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!location) return;
+
+    router.push(`/search?q=${location}`);
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main className="min-h-screen bg-white font-sans text-gray-900">
+      {/* HERO */}
+      <section
+        className="relative overflow-hidden bg-cover bg-center"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(0, 100, 140, 0.55), rgba(0, 180, 200, 0.35)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=80')",
+        }}
+      >
+        <div className="mx-auto max-w-7xl px-6 py-28 text-center md:py-36">
+          <p className="mb-5 text-sm font-semibold uppercase tracking-[3px] text-white">
+            CHÀO MỪNG ĐẾN VỚI STAYGO
           </p>
+
+          <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
+            Tìm một nơi
+            <span className="mt-2 block text-cyan-200">
+              thật phù hợp với bạn
+            </span>
+          </h1>
+
+          <p className="mx-auto mt-6 max-w-2xl text-base font-medium leading-7 text-white/90 sm:text-lg sm:leading-8">
+            Khám phá những không gian lưu trú thoải mái, tiện nghi và phù hợp
+            cho chuyến đi của bạn.
+          </p>
+
+          {/* SEARCH */}
+          <form onSubmit={handleSearch} className="mx-auto mt-10 max-w-3xl">
+            <div className="flex flex-col gap-3 rounded-3xl bg-white p-3 shadow-2xl md:flex-row md:items-center md:rounded-full">
+              <div className="flex flex-1 items-center gap-3 rounded-2xl px-4 py-3 text-left md:rounded-full">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-cyan-50">
+                  <svg
+                    className="h-6 w-6 text-cyan-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17.657 16.657L13.414 21a2 2 0 01-2.828 0l-4.243-4.343a8 8 0 1111.314 0z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                </div>
+
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs font-bold uppercase tracking-wider text-gray-400">
+                    Địa điểm
+                  </p>
+
+                  <select
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    className="mt-1 w-full cursor-pointer bg-transparent text-sm font-semibold text-gray-800 outline-none"
+                  >
+                    <option value="">Bạn muốn đi đâu?</option>
+
+                    {locations.map((item) => (
+                      <option key={item.id} value={item.id}>
+                        {item.tenViTri} - {item.tinhThanh}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              {/* SEARCH BUTTON */}
+              <button
+                type="submit"
+                disabled={!location}
+                className="flex h-14 items-center justify-center gap-2 rounded-2xl bg-cyan-500 px-8 text-sm font-bold text-white shadow-lg transition hover:bg-cyan-600 disabled:cursor-not-allowed disabled:opacity-50 md:rounded-full"
+              >
+                <svg
+                  className="h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-4.35-4.35m2.35-5.65a8 8 0 11-16 0 8 8 0 0116 0z"
+                  />
+                </svg>
+                Tìm kiếm
+              </button>
+            </div>
+          </form>
+
+          {/* BUTTONS */}
+          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
+            <Link
+              href="/rooms"
+              className="rounded-full bg-white px-8 py-3.5 text-sm font-bold text-cyan-600 shadow-lg transition hover:bg-gray-100"
+            >
+              Khám phá phòng
+            </Link>
+
+            <Link
+              href="/about"
+              className="rounded-full border border-white bg-white/10 px-8 py-3.5 text-sm font-bold text-white backdrop-blur-sm transition hover:bg-white hover:text-cyan-600"
+            >
+              Tìm hiểu thêm
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </section>
+    </main>
   );
 }
