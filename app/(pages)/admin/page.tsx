@@ -78,7 +78,7 @@ export default function Admin() {
           <h1 className="text-3xl font-bold">Dashboard quản trị</h1>
 
           <p className="mt-2 max-w-xl text-sm text-blue-100">
-            Theo dõi và quản lý hệ thống Airbnb của bạn một cách dễ dàng.
+            Theo dõi và quản lý hệ thống StayGO của bạn một cách dễ dàng.
           </p>
 
           <div className="mt-6 flex flex-wrap gap-3">
