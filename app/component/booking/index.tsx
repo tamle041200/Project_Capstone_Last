@@ -74,34 +74,39 @@ export default function Booking({ maPhong }: TProps) {
   };
 
   return (
-    <div className="overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-xl shadow-gray-200/50">
+    <div className="w-full overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-xl shadow-gray-200/50 sm:rounded-3xl">
       {/* ================= HEADER ================= */}
-      <div className="border-b border-gray-100 p-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-xl font-bold text-gray-900">Đặt phòng</h2>
 
-            <p className="mt-1 text-sm text-gray-500">
+      <div className="border-b border-gray-100 px-4 py-4 sm:px-6 sm:py-5 lg:p-6">
+        <div className="flex items-center justify-between gap-3">
+          <div className="min-w-0">
+            <h2 className="text-lg font-bold text-gray-900 sm:text-xl">
+              Đặt phòng
+            </h2>
+
+            <p className="mt-1 text-xs text-gray-500 sm:text-sm">
               Chọn ngày lưu trú của bạn
             </p>
           </div>
 
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-xl">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-blue-50 text-lg sm:h-10 sm:w-10 sm:text-xl">
             🏠
           </div>
         </div>
       </div>
 
       {/* ================= FORM ================= */}
-      <div className="space-y-5 p-6">
-        {/* Ngày nhận */}
+
+      <div className="space-y-4 p-4 sm:space-y-5 sm:p-6">
+        {/* ================= NGÀY NHẬN ================= */}
+
         <div>
           <label className="mb-2 block text-sm font-semibold text-gray-800">
             Ngày nhận phòng
           </label>
 
           <div className="relative">
-            <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-lg">
+            <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-base sm:left-4 sm:text-lg">
               📅
             </span>
 
@@ -110,19 +115,20 @@ export default function Booking({ maPhong }: TProps) {
               min={today}
               value={ngayDen}
               onChange={(e) => setNgayDen(e.target.value)}
-              className="w-full rounded-2xl border border-gray-200 bg-gray-50 py-3.5 pl-12 pr-4 text-sm font-medium text-gray-700 outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-50"
+              className="h-12 w-full rounded-xl border border-gray-200 bg-gray-50 py-3 pl-11 pr-3 text-sm font-medium text-gray-700 outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-50 sm:h-auto sm:rounded-2xl sm:py-3.5 sm:pl-12 sm:pr-4"
             />
           </div>
         </div>
 
-        {/* Ngày trả */}
+        {/* ================= NGÀY TRẢ ================= */}
+
         <div>
           <label className="mb-2 block text-sm font-semibold text-gray-800">
             Ngày trả phòng
           </label>
 
           <div className="relative">
-            <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-lg">
+            <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-base sm:left-4 sm:text-lg">
               📅
             </span>
 
@@ -131,19 +137,20 @@ export default function Booking({ maPhong }: TProps) {
               min={ngayDen || today}
               value={ngayDi}
               onChange={(e) => setNgayDi(e.target.value)}
-              className="w-full rounded-2xl border border-gray-200 bg-gray-50 py-3.5 pl-12 pr-4 text-sm font-medium text-gray-700 outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-50"
+              className="h-12 w-full rounded-xl border border-gray-200 bg-gray-50 py-3 pl-11 pr-3 text-sm font-medium text-gray-700 outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-50 sm:h-auto sm:rounded-2xl sm:py-3.5 sm:pl-12 sm:pr-4"
             />
           </div>
         </div>
 
-        {/* Số khách */}
+        {/* ================= SỐ KHÁCH ================= */}
+
         <div>
           <label className="mb-2 block text-sm font-semibold text-gray-800">
             Số khách
           </label>
 
           <div className="relative">
-            <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-lg">
+            <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-base sm:left-4 sm:text-lg">
               👥
             </span>
 
@@ -152,17 +159,18 @@ export default function Booking({ maPhong }: TProps) {
               min={1}
               value={soLuongKhach}
               onChange={(e) => setSoLuongKhach(e.target.value)}
-              className="w-full rounded-2xl border border-gray-200 bg-gray-50 py-3.5 pl-12 pr-4 text-sm font-medium text-gray-700 outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-50"
+              className="h-12 w-full rounded-xl border border-gray-200 bg-gray-50 py-3 pl-11 pr-3 text-sm font-medium text-gray-700 outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-50 sm:h-auto sm:rounded-2xl sm:py-3.5 sm:pl-12 sm:pr-4"
             />
           </div>
         </div>
 
         {/* ================= NOTE ================= */}
-        <div className="rounded-2xl bg-blue-50 p-4">
-          <div className="flex gap-3">
-            <span className="text-lg">💡</span>
 
-            <div>
+        <div className="rounded-xl bg-blue-50 p-3.5 sm:rounded-2xl sm:p-4">
+          <div className="flex items-start gap-2.5 sm:gap-3">
+            <span className="shrink-0 text-base sm:text-lg">💡</span>
+
+            <div className="min-w-0">
               <p className="text-sm font-semibold text-blue-900">Lưu ý</p>
 
               <p className="mt-1 text-xs leading-5 text-blue-700">
@@ -174,27 +182,29 @@ export default function Booking({ maPhong }: TProps) {
         </div>
 
         {/* ================= BUTTON ================= */}
+
         <button
           type="button"
           onClick={handleBooking}
           disabled={loading}
-          className="flex w-full items-center justify-center gap-2 rounded-2xl bg-blue-600 py-4 font-bold text-white shadow-lg shadow-blue-200 transition-all duration-300 hover:bg-blue-700 hover:shadow-xl active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 disabled:shadow-none"
+          className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 text-sm font-bold text-white shadow-lg shadow-blue-200 transition-all duration-300 hover:bg-blue-700 hover:shadow-xl active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 disabled:shadow-none sm:h-auto sm:rounded-2xl sm:py-4 sm:text-base"
         >
           {loading ? (
             <>
               <span className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
-              Đang đặt phòng...
+              <span>Đang đặt phòng...</span>
             </>
           ) : (
             <>
-              Đặt phòng
+              <span>Đặt phòng</span>
               <span>→</span>
             </>
           )}
         </button>
 
-        {/* Security */}
-        <p className="text-center text-xs text-gray-400">
+        {/* ================= SECURITY ================= */}
+
+        <p className="px-2 text-center text-[11px] leading-5 text-gray-400 sm:text-xs">
           🔒 Thông tin đặt phòng của bạn được bảo mật
         </p>
       </div>

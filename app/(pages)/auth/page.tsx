@@ -16,6 +16,7 @@ export default function AuthPage() {
     e.preventDefault();
 
     try {
+      setLoading(true);
       setError("");
 
       const data = await getLogIn({
@@ -25,6 +26,7 @@ export default function AuthPage() {
 
       if (data?.user?.role !== "ADMIN") {
         setError("Tài khoản không có quyền Admin");
+        setLoading(false);
         return;
       }
 
@@ -34,58 +36,64 @@ export default function AuthPage() {
     } catch (error) {
       console.log(error);
       setError("Email hoặc mật khẩu không chính xác");
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-slate-100 flex items-center justify-center px-4 py-10">
+    <div className="flex min-h-screen items-center justify-center bg-slate-100 px-4 py-6 sm:px-6 sm:py-10">
       <div className="w-full max-w-5xl overflow-hidden rounded-2xl bg-white shadow-xl">
-        <div className="grid md:grid-cols-2">
-          {/* LEFT */}
-          <div className="hidden md:flex flex-col justify-between bg-slate-900 p-12 text-white">
+        <div className="grid min-h-[600px] md:grid-cols-2">
+          {/* ================= LEFT ================= */}
+          <div className="hidden flex-col justify-between bg-slate-900 p-8 text-white sm:p-10 md:flex lg:p-12">
+            {/* LOGO */}
             <div>
               <div className="flex items-center gap-3">
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600 text-xl font-bold">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-lg font-bold sm:h-11 sm:w-11 sm:text-xl">
                   S
                 </div>
 
                 <div>
-                  <h1 className="text-xl font-bold">StayGO</h1>
+                  <h1 className="text-lg font-bold sm:text-xl">StayGO</h1>
 
-                  <p className="text-xs text-slate-400">Administration</p>
+                  <p className="text-[11px] text-slate-400 sm:text-xs">
+                    Administration
+                  </p>
                 </div>
               </div>
             </div>
 
-            <div>
-              <p className="mb-4 text-sm font-medium text-blue-400">
+            {/* CONTENT */}
+            <div className="my-10">
+              <p className="mb-3 text-xs font-medium tracking-wide text-blue-400 sm:mb-4 sm:text-sm">
                 ADMINISTRATION SYSTEM
               </p>
 
-              <h2 className="max-w-sm text-4xl font-bold leading-tight">
+              <h2 className="max-w-sm text-3xl font-bold leading-tight sm:text-4xl">
                 Quản lý hệ thống
                 <br />
                 StayGO
               </h2>
 
-              <p className="mt-6 max-w-md text-sm leading-7 text-slate-400">
+              <p className="mt-5 max-w-md text-sm leading-6 text-slate-400 sm:mt-6 sm:leading-7">
                 Quản lý người dùng, phòng và các hoạt động của hệ thống một cách
                 nhanh chóng và hiệu quả.
               </p>
             </div>
 
-            <div className="border-t border-slate-700 pt-5">
-              <p className="text-xs text-slate-500">
+            {/* FOOTER */}
+            <div className="border-t border-slate-700 pt-4 sm:pt-5">
+              <p className="text-[11px] text-slate-500 sm:text-xs">
                 © 2026 StayGO. All rights reserved.
               </p>
             </div>
           </div>
 
-          {/* RIGHT */}
-          <div className="flex items-center justify-center p-8 sm:p-12">
+          {/* ================= RIGHT ================= */}
+          <div className="flex items-center justify-center px-5 py-8 sm:px-10 sm:py-12 lg:px-12">
             <div className="w-full max-w-md">
               {/* MOBILE LOGO */}
-              <div className="mb-10 flex items-center gap-3 md:hidden">
+              <div className="mb-8 flex items-center gap-3 md:hidden">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600 text-lg font-bold text-white">
                   S
                 </div>
@@ -98,15 +106,18 @@ export default function AuthPage() {
               </div>
 
               {/* TITLE */}
-              <div className="mb-8">
-                <h2 className="text-3xl font-bold text-slate-900">Đăng nhập</h2>
+              <div className="mb-7 sm:mb-8">
+                <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl">
+                  Đăng nhập
+                </h2>
 
-                <p className="mt-2 text-sm text-slate-500">
+                <p className="mt-2 text-sm leading-6 text-slate-500">
                   Đăng nhập vào tài khoản quản trị của bạn.
                 </p>
               </div>
 
-              <form onSubmit={handleLogin} className="space-y-6">
+              {/* FORM */}
+              <form onSubmit={handleLogin} className="space-y-5 sm:space-y-6">
                 {/* EMAIL */}
                 <div>
                   <label className="mb-2 block text-sm font-semibold text-slate-700">
@@ -118,23 +129,23 @@ export default function AuthPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="admin@example.com"
+                    required
                     className="w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
                   />
                 </div>
 
                 {/* PASSWORD */}
                 <div>
-                  <div className="mb-2 flex items-center justify-between">
-                    <label className="text-sm font-semibold text-slate-700">
-                      Mật khẩu
-                    </label>
-                  </div>
+                  <label className="mb-2 block text-sm font-semibold text-slate-700">
+                    Mật khẩu
+                  </label>
 
                   <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Nhập mật khẩu"
+                    required
                     className="w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
                   />
                 </div>
@@ -142,7 +153,7 @@ export default function AuthPage() {
                 {/* ERROR */}
                 {error && (
                   <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3">
-                    <p className="text-sm text-red-600">{error}</p>
+                    <p className="text-sm leading-5 text-red-600">{error}</p>
                   </div>
                 )}
 
@@ -150,15 +161,15 @@ export default function AuthPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full rounded-lg bg-blue-600 py-3 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="w-full rounded-lg bg-blue-600 py-3 text-sm font-semibold text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-200 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {loading ? "Đang đăng nhập..." : "Đăng nhập"}
                 </button>
               </form>
 
               {/* FOOTER */}
-              <div className="mt-8 border-t border-slate-200 pt-6">
-                <p className="text-center text-xs text-slate-400">
+              <div className="mt-7 border-t border-slate-200 pt-5 sm:mt-8 sm:pt-6">
+                <p className="text-center text-xs leading-5 text-slate-400">
                   Chỉ dành cho tài khoản có quyền quản trị viên
                 </p>
               </div>
