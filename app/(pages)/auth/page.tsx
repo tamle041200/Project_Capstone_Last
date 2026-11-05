@@ -32,6 +32,9 @@ export default function AuthPage() {
 
       localStorage.setItem("user", JSON.stringify(data));
 
+      // Lưu token
+      localStorage.setItem("token", data.token);
+
       router.push("/admin");
     } catch (error) {
       console.log(error);
